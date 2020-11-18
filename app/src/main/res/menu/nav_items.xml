@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_category"
+        android:icon="@drawable/ic_baseline_eco"
+        android:title="Categories" />
+
+    <item
+        android:id="@+id/menu_latest"
+        android:icon="@drawable/ic_baseline_update"
+        android:title="Latest" />
+    <item
+        android:id="@+id/menu_region"
+        android:icon="@drawable/ic_baseline_location"
+        android:title="Locations" />
+    <item
+        android:id="@+id/menu_cities"
+        android:icon="@drawable/ic_baseline_local_shipping_24"
+        android:title="Transportation" />
+
+</menu>
