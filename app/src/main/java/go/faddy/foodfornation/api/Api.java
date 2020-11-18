@@ -7,6 +7,7 @@ import go.faddy.foodfornation.respones.ImageUrlFetchResponse;
 import go.faddy.foodfornation.respones.ItemDetailsResponse;
 import go.faddy.foodfornation.respones.ItemsResponse;
 import go.faddy.foodfornation.respones.ItemsbyLocationResponse;
+import go.faddy.foodfornation.respones.LoginResponse;
 import go.faddy.foodfornation.respones.RegionSpinnerResponse;
 import go.faddy.foodfornation.respones.UserProfileResponse;
 import retrofit2.Call;
@@ -78,5 +79,12 @@ public interface Api {
             @Field("city_name") String city_name,
             @Field("d_coord_lat") int d_coord_lat,
             @Field("d_coord_long") int d_coord_long
+    );
+
+    @FormUrlEncoded
+    @POST("checkpass")
+    Call<LoginResponse> checkPassword(
+            @Field("email") String email,
+            @Field("password") String password
     );
 }

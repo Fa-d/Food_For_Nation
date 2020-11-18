@@ -301,14 +301,13 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         Call<CitySpinnerResponse> callCity =
                 RetrofitClient.getInstance().getApi().getCitiesNameSpinner(
                         regionsNameSpinnerModelList.get(
-                                spinnerRegions.getSelectedItemPosition()).getRegion_id());
+                                spinnerRegions.getSelectedItemPosition()-1).getRegion_id());
         callCity.enqueue(new Callback<CitySpinnerResponse>() {
             @Override
             public void onResponse(Call<CitySpinnerResponse> call, Response<CitySpinnerResponse> response) {
                 citySpinnerResponseList = response.body().getCities();
                 populateSpinner(3);
             }
-
             @Override
             public void onFailure(Call<CitySpinnerResponse> call, Throwable t) {
 
