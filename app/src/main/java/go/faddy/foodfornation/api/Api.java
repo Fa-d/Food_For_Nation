@@ -9,6 +9,7 @@ import go.faddy.foodfornation.respones.ItemsResponse;
 import go.faddy.foodfornation.respones.ItemsbyLocationResponse;
 import go.faddy.foodfornation.respones.LoginResponse;
 import go.faddy.foodfornation.respones.RegionSpinnerResponse;
+import go.faddy.foodfornation.respones.UserIDResponse;
 import go.faddy.foodfornation.respones.UserProfileResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -87,4 +88,32 @@ public interface Api {
             @Field("email") String email,
             @Field("password") String password
     );
+
+    @FormUrlEncoded
+    @POST("registeruser") Call<CheckErrorResponse> registerUser(
+            @Field("full_user_name") String full_user_name,
+            @Field("user_name") String user_name,
+            @Field("password") String password,
+            @Field("email") String email,
+            @Field("website") String website,
+            @Field("landline") int landline,
+            @Field("mobile_no") int mobile_no,
+            @Field("user_address") String user_address,
+            @Field("zip") String zip,
+            @Field("has_company") int has_company,
+            @Field("region_name") String region_name,
+            @Field("city_name") String city_name,
+            @Field("ip") String ip,
+            @Field("coord_lat") int coord_lat,
+            @Field("coord_long") int coord_long,
+            @Field("user_desc") String user_desc
+    );
+
+    @FormUrlEncoded
+    @POST("useridatregistration")
+    Call<UserIDResponse> checkId(
+            @Field("email") String email,
+            @Field("password") String password
+    );
+
 }

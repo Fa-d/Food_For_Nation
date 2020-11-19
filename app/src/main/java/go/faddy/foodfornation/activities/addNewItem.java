@@ -50,6 +50,7 @@ import go.faddy.foodfornation.respones.CategoriesResponse;
 import go.faddy.foodfornation.respones.CheckErrorResponse;
 import go.faddy.foodfornation.respones.CitySpinnerResponse;
 import go.faddy.foodfornation.respones.RegionSpinnerResponse;
+import go.faddy.foodfornation.storage.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -123,7 +124,11 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         publish_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchTexts();
+                if (spinnerCities.getSelectedItemPosition() >= 1 && spinnerRegions.getSelectedItemPosition() >= 1 && spinnerCategories.getSelectedItemPosition() >= 1) {
+                    fetchTexts();
+                }else{
+                    Toast.makeText(addNewItem.this, "Select all required params", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -153,8 +158,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         });
         spinnerCategories.setOnItemSelectedListener(this);
         spinnerRegions.setOnItemSelectedListener(this);
-        Intent intent = getIntent();
-        user_id = intent.getIntExtra("user_id", -1);
+        user_id = SharedPrefManager.getInstance(this).getUser().getUser_id();
     }
 
     private void fetchTexts() {
@@ -185,7 +189,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
                 (userAddress != null) && (itemTitle != null) && (itemDescription != null) && (Integer.parseInt(userZip)
                 != 0) && (regionName != null) && (cityName != null) && ((int) latitude != 0) && (int) longitude != 0) {
             Call<CheckErrorResponse> call = RetrofitClient.getInstance().getApi().
-                    insertItem(18, category_id, Integer.parseInt(price), ip, experationDate, userAddress, itemTitle,
+                    insertItem(user_id, category_id, Integer.parseInt(price), ip, experationDate, userAddress, itemTitle,
                             itemDescription, Integer.parseInt(userZip), regionName, cityName, (int) latitude, (int) longitude);
             call.enqueue(new Callback<CheckErrorResponse>() {
                 @Override

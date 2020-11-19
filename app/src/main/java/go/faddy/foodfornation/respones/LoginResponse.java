@@ -1,8 +1,9 @@
 package go.faddy.foodfornation.respones;
 
 public class LoginResponse {
-    private int user_id;
+
     private boolean error;
+    private int user_id;
 
     public LoginResponse(int user_id, boolean error) {
         this.user_id = user_id;

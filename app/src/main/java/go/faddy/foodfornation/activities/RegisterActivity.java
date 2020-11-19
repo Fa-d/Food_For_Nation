@@ -2,6 +2,7 @@ package go.faddy.foodfornation.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -40,8 +41,12 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.CitiesNameSpinnerModel;
 import go.faddy.foodfornation.models.RegionsNameSpinnerModel;
+import go.faddy.foodfornation.respones.CheckErrorResponse;
 import go.faddy.foodfornation.respones.CitySpinnerResponse;
+import go.faddy.foodfornation.respones.LoginResponse;
 import go.faddy.foodfornation.respones.RegionSpinnerResponse;
+import go.faddy.foodfornation.respones.UserIDResponse;
+import go.faddy.foodfornation.storage.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,11 +56,15 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private EditText user_full_name_register, user_name_register, enter_password_register,
             mail_register, user_website_register, user_landline_register, user_mobile_register,
             user_address_inputed_register, user_zip_register, user_self_description;
+
     private List<RegionsNameSpinnerModel> regionsNameSpinnerModelList;
     private List<CitiesNameSpinnerModel> citySpinnerResponseList;
+
     private String user_full_name_register_string, user_name_register_string, enter_password_register_string,
             mail_register_string, user_website_register_string, user_landline_register_string,
-            user_mobile_register_string, user_address_inputed_register_string, user_zip_register_string, user_self_description_string;
+            user_mobile_register_string, user_address_inputed_register_string, user_zip_register_string,
+            user_self_description_string, regionName, cityName;
+
     private double latitude, longitude;
     private LocationManager locationManager;
     private Spinner spinnerCities, spinnerRegions;
@@ -90,10 +99,70 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         the_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTextsFromEditTexts();
-                boolean check = checkEmptyParams();
+                if (spinnerCities.getSelectedItemPosition() >= 1 && spinnerRegions.getSelectedItemPosition() >= 1) {
+                    getTextsFromEditTexts();
+                    boolean check = checkEmptyParams();
+                    if (check) {
+                        beingRegistered();
+                    }
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Select all Required params", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void beingRegistered() {
+        if (user_full_name_register_string != null && user_name_register_string != null && enter_password_register_string != null &&
+                mail_register_string != null && user_website_register_string != null && Integer.parseInt(user_landline_register_string) != 0 &&
+                Integer.parseInt(user_mobile_register_string) != 0 && user_address_inputed_register_string != null &&
+                user_zip_register_string != null && isOwner != 0 && regionName != null && cityName != null && ip != null && (int) latitude != 0 &&
+                (int) longitude != 0 && user_self_description_string != null) {
+            Call<CheckErrorResponse> call = RetrofitClient.getInstance().getApi().registerUser(
+                    user_full_name_register_string, user_name_register_string, enter_password_register_string,
+                    mail_register_string, user_website_register_string, Integer.parseInt(user_landline_register_string),
+                    Integer.parseInt(user_mobile_register_string), user_address_inputed_register_string,
+                    user_zip_register_string, isOwner, regionName, cityName, ip, (int) latitude,
+                    (int) longitude, user_self_description_string
+            );
+            call.enqueue(new Callback<CheckErrorResponse>() {
+                @Override
+                public void onResponse(Call<CheckErrorResponse> call, Response<CheckErrorResponse> response) {
+                    if (response.body() != null) {
+
+                        if (!response.body().isError()) {
+
+                            Call<UserIDResponse> calltoId = RetrofitClient.getInstance().getApi().checkId(mail_register_string, enter_password_register_string);
+                            calltoId.enqueue(new Callback<UserIDResponse>() {
+                                @Override
+                                public void onResponse(Call<UserIDResponse> call, Response<UserIDResponse> response2) {
+                                    if (response2.body() != null) {
+                                        Toast.makeText(RegisterActivity.this, "came", Toast.LENGTH_SHORT).show();
+                                        LoginResponse temp = new LoginResponse(response2.body().getUser_id(), response.body().isError());
+                                        SharedPrefManager.getInstance(RegisterActivity.this).saveUser(temp);
+                                        Intent intent = new Intent(RegisterActivity.this, CategoryDetailsActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<UserIDResponse> call, Throwable t) {
+
+                                }
+                            });
+
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<CheckErrorResponse> call, Throwable t) {
+                }
+            });
+        } else {
+            Toast.makeText(this, "Someting Seems null", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void netOnMainThreadPermission() {
@@ -128,6 +197,10 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         user_address_inputed_register_string = user_address_inputed_register.getText().toString().trim();
         user_zip_register_string = user_zip_register.getText().toString().trim();
         user_self_description_string = user_self_description.getText().toString().trim();
+
+        cityName = spinnerCities.getSelectedItem().toString();
+        regionName = spinnerRegions.getSelectedItem().toString();
+
         ip = getIP();
         while (latitude == 0) {
             getLocation();
@@ -316,12 +389,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         if (parent.getAdapter() == spinnerRegions.getAdapter() && position > 0) {
             goThere();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this);
     }
 
     @Override
