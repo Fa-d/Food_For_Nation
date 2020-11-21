@@ -1,11 +1,10 @@
-package go.faddy.foodfornation.activities;
+package go.faddy.foodfornation.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,7 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.adapters.ItemFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.ItemsModel;
-import go.faddy.foodfornation.respones.ItemsResponse;
+import go.faddy.foodfornation.api.respones.ItemsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

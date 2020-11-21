@@ -1,21 +1,23 @@
 package go.faddy.foodfornation.api;
 
-import go.faddy.foodfornation.respones.CategoriesResponse;
-import go.faddy.foodfornation.respones.CheckErrorResponse;
-import go.faddy.foodfornation.respones.CitySpinnerResponse;
-import go.faddy.foodfornation.respones.ImageUrlFetchResponse;
-import go.faddy.foodfornation.respones.ItemDetailsResponse;
-import go.faddy.foodfornation.respones.ItemsResponse;
-import go.faddy.foodfornation.respones.ItemsbyLocationResponse;
-import go.faddy.foodfornation.respones.LoginResponse;
-import go.faddy.foodfornation.respones.RegionSpinnerResponse;
-import go.faddy.foodfornation.respones.UserIDResponse;
-import go.faddy.foodfornation.respones.UserProfileResponse;
+import go.faddy.foodfornation.api.respones.CategoriesResponse;
+import go.faddy.foodfornation.api.respones.CheckErrorResponse;
+import go.faddy.foodfornation.api.respones.CitySpinnerResponse;
+import go.faddy.foodfornation.api.respones.ItemDetailsResponse;
+import go.faddy.foodfornation.api.respones.ItemsResponse;
+import go.faddy.foodfornation.api.respones.ItemsbyLocationResponse;
+import go.faddy.foodfornation.api.respones.LoginResponse;
+import go.faddy.foodfornation.api.respones.RegionSpinnerResponse;
+import go.faddy.foodfornation.api.respones.UserIDResponse;
+import go.faddy.foodfornation.api.respones.UserProfileResponse;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface Api {
     @GET("getcatagories")
@@ -25,12 +27,6 @@ public interface Api {
     @POST("itemsfromcategories")
     Call<ItemsResponse> itemsByCategory(
             @Field("category") int category
-    );
-
-    @FormUrlEncoded
-    @POST("itemsfromcategories")
-    Call<ImageUrlFetchResponse> imageUrls(
-            @Field("id") int id
     );
 
     @FormUrlEncoded
@@ -64,22 +60,23 @@ public interface Api {
             @Field("region_id") int region_id
     );
 
-    @FormUrlEncoded
+    @Multipart
     @POST("insertitem")
     Call<CheckErrorResponse> insertItem(
-            @Field("user_id") int user_id,
-            @Field("category_id") int category_id,
-            @Field("item_price") int item_price,
-            @Field("user_ip") String user_ip,
-            @Field("dt_expiration") String dt_expiration,
-            @Field("user_address") String user_address,
-            @Field("item_title") String item_title,
-            @Field("item_description") String item_description,
-            @Field("zip") int zip,
-            @Field("region_name") String region_name,
-            @Field("city_name") String city_name,
-            @Field("d_coord_lat") int d_coord_lat,
-            @Field("d_coord_long") int d_coord_long
+            @Part("user_id") int user_id,
+            @Part("category_id") int category_id,
+            @Part("item_price") int item_price,
+            @Part("user_ip") String user_ip,
+            @Part("dt_expiration") String dt_expiration,
+            @Part("user_address") String user_address,
+            @Part("item_title") String item_title,
+            @Part("item_description") String item_description,
+            @Part("zip") int zip,
+            @Part("region_name") String region_name,
+            @Part("city_name") String city_name,
+            @Part("d_coord_lat") double d_coord_lat,
+            @Part("d_coord_long") double d_coord_long,
+            @Part MultipartBody.Part image
     );
 
     @FormUrlEncoded
@@ -90,7 +87,8 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("registeruser") Call<CheckErrorResponse> registerUser(
+    @POST("registeruser")
+    Call<CheckErrorResponse> registerUser(
             @Field("full_user_name") String full_user_name,
             @Field("user_name") String user_name,
             @Field("password") String password,
@@ -108,6 +106,7 @@ public interface Api {
             @Field("coord_long") int coord_long,
             @Field("user_desc") String user_desc
     );
+
 
     @FormUrlEncoded
     @POST("useridatregistration")

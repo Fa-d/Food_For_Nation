@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.behaviors;
+package go.faddy.foodfornation.utils.behaviors;
 
 import android.view.View;
 

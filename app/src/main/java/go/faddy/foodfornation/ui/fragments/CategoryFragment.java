@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.fragments;
+package go.faddy.foodfornation.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.adapters.CategoryFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.CategoriesModel;
-import go.faddy.foodfornation.respones.CategoriesResponse;
+import go.faddy.foodfornation.api.respones.CategoriesResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.activities;
+package go.faddy.foodfornation.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import go.faddy.foodfornation.R;
-import go.faddy.foodfornation.behaviors.BottomNavigationViewBehavior;
+import go.faddy.foodfornation.utils.behaviors.BottomNavigationViewBehavior;
 import go.faddy.foodfornation.adapters.ViewPagerAdapter;
 
 public class CategoryDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {

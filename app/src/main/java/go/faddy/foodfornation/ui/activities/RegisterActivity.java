@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.activities;
+package go.faddy.foodfornation.ui.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -41,12 +41,12 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.CitiesNameSpinnerModel;
 import go.faddy.foodfornation.models.RegionsNameSpinnerModel;
-import go.faddy.foodfornation.respones.CheckErrorResponse;
-import go.faddy.foodfornation.respones.CitySpinnerResponse;
-import go.faddy.foodfornation.respones.LoginResponse;
-import go.faddy.foodfornation.respones.RegionSpinnerResponse;
-import go.faddy.foodfornation.respones.UserIDResponse;
-import go.faddy.foodfornation.storage.SharedPrefManager;
+import go.faddy.foodfornation.api.respones.CheckErrorResponse;
+import go.faddy.foodfornation.api.respones.CitySpinnerResponse;
+import go.faddy.foodfornation.api.respones.LoginResponse;
+import go.faddy.foodfornation.api.respones.RegionSpinnerResponse;
+import go.faddy.foodfornation.api.respones.UserIDResponse;
+import go.faddy.foodfornation.utils.storage.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

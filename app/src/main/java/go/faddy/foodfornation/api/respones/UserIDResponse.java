@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.respones;
+package go.faddy.foodfornation.api.respones;
 
 public class UserIDResponse {
     private int user_id;

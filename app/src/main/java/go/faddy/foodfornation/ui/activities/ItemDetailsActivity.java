@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.activities;
+package go.faddy.foodfornation.ui.activities;
 
 import android.Manifest;
 import android.animation.Animator;
@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -40,7 +41,7 @@ import go.faddy.foodfornation.adapters.CommentFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.CommentModel;
 import go.faddy.foodfornation.models.ItemDetailsModel;
-import go.faddy.foodfornation.respones.ItemDetailsResponse;
+import go.faddy.foodfornation.api.respones.ItemDetailsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,6 +63,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
     private int shortAnimationDuration;
     private String image_url;
     private View thumb1View;
+    TextInputEditText inputComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

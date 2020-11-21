@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.activities;
+package go.faddy.foodfornation.ui.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,8 +26,8 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.adapters.UsersProfileItemFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.UsersProfilePostItemsModel;
-import go.faddy.foodfornation.respones.UserProfileResponse;
-import go.faddy.foodfornation.respones.UsersProfileMiddleResponse;
+import go.faddy.foodfornation.api.respones.UserProfileResponse;
+import go.faddy.foodfornation.api.respones.UsersProfileMiddleResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

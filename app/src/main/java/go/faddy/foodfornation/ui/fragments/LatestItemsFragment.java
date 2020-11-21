@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.fragments;
+package go.faddy.foodfornation.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +20,7 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.adapters.ItemFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.ItemsModel;
-import go.faddy.foodfornation.respones.ItemsResponse;
+import go.faddy.foodfornation.api.respones.ItemsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

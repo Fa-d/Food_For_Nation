@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import go.faddy.foodfornation.R;
-import go.faddy.foodfornation.activities.ItemDetailsActivity;
+import go.faddy.foodfornation.ui.activities.ItemDetailsActivity;
 import go.faddy.foodfornation.models.ItemsModel;
 
 public class ItemFetchAdapter extends RecyclerView.Adapter<ItemFetchAdapter.ItemViewHolder> {

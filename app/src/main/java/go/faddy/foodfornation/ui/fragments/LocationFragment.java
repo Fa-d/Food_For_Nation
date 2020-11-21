@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.fragments;
+package go.faddy.foodfornation.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ import go.faddy.foodfornation.adapters.RegionFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.models.CitiesModel;
 import go.faddy.foodfornation.models.RegionsModel;
-import go.faddy.foodfornation.respones.ItemsbyLocationResponse;
+import go.faddy.foodfornation.api.respones.ItemsbyLocationResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

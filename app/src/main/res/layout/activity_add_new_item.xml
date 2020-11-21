@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.addNewItem">
+    tools:context=".ui.activities.addNewItem">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,6 +106,10 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="Images" />
+                <ImageView
+                    android:id="@+id/image_show"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -199,5 +203,12 @@
             android:layout_gravity="center"
             android:layout_margin="30dp"
             android:text="Publish" />
+        <Button
+            android:id="@+id/another_for_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:text="Get Image Uri" />
     </LinearLayout>
 </ScrollView>

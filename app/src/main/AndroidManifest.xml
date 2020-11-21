@@ -2,9 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="go.faddy.foodfornation">
 
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+    <permission
+        android:name="PlatesContentProvider._READ_PERMISSION"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="PlatesContentProvider._WRITE_PERMISSION"
+        android:protectionLevel="normal" />
+
+    <permission
+        android:name="go.faddy.foodfornation.PERMISSION"/>
 
     <application
         android:allowBackup="true"
@@ -14,13 +34,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodForNation"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.RegisterActivity"/>
-        <activity android:name=".activities.CategoryDetailsActivity" />
-        <activity android:name=".activities.addNewItem" />
-        <activity android:name=".activities.UserProfileActivity" />
-        <activity android:name=".activities.ItemDetailsActivity" />
-        <activity android:name=".activities.ItemsListActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".ui.activities.RegisterActivity"/>
+        <activity android:name=".ui.activities.CategoryDetailsActivity" />
+        <activity android:name=".ui.activities.addNewItem" />
+        <activity android:name=".ui.activities.UserProfileActivity" />
+        <activity android:name=".ui.activities.ItemDetailsActivity" />
+        <activity android:name=".ui.activities.ItemsListActivity" />
+        <activity android:name=".ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

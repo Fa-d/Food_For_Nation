@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import go.faddy.foodfornation.fragments.CategoryFragment;
-import go.faddy.foodfornation.fragments.TransportationFragment;
-import go.faddy.foodfornation.fragments.LatestItemsFragment;
-import go.faddy.foodfornation.fragments.LocationFragment;
+import go.faddy.foodfornation.ui.fragments.CategoryFragment;
+import go.faddy.foodfornation.ui.fragments.TransportationFragment;
+import go.faddy.foodfornation.ui.fragments.LatestItemsFragment;
+import go.faddy.foodfornation.ui.fragments.LocationFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 

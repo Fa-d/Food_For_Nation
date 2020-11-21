@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 import go.faddy.foodfornation.R;
-import go.faddy.foodfornation.activities.ItemsListActivity;
+import go.faddy.foodfornation.ui.activities.ItemsListActivity;
 import go.faddy.foodfornation.models.CategoriesModel;
 
 public class CategoryFetchAdapter extends RecyclerView.Adapter<CategoryFetchAdapter.CategoryViewHolder> {

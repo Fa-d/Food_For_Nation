@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import go.faddy.foodfornation.R;
-import go.faddy.foodfornation.activities.ItemsListActivity;
+import go.faddy.foodfornation.ui.activities.ItemsListActivity;
 import go.faddy.foodfornation.models.RegionsModel;
 
 public class RegionFetchAdapter extends RecyclerView.Adapter<RegionFetchAdapter.RegionFetchViewHolder> {

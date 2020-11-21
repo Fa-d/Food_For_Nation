@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.activities;
+package go.faddy.foodfornation.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.api.RetrofitClient;
-import go.faddy.foodfornation.respones.LoginResponse;
-import go.faddy.foodfornation.storage.SharedPrefManager;
+import go.faddy.foodfornation.api.respones.LoginResponse;
+import go.faddy.foodfornation.utils.storage.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

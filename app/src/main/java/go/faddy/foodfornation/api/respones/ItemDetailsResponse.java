@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.respones;
+package go.faddy.foodfornation.api.respones;
 
 import go.faddy.foodfornation.models.ItemDetailsModel;
 

@@ -1,9 +1,9 @@
-package go.faddy.foodfornation.storage;
+package go.faddy.foodfornation.utils.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import go.faddy.foodfornation.respones.LoginResponse;
+import go.faddy.foodfornation.api.respones.LoginResponse;
 
 public class SharedPrefManager {
 
