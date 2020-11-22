@@ -25,14 +25,14 @@ import java.util.List;
 import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.adapters.UsersProfileItemFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
-import go.faddy.foodfornation.models.UsersProfilePostItemsModel;
 import go.faddy.foodfornation.api.respones.UserProfileResponse;
 import go.faddy.foodfornation.api.respones.UsersProfileMiddleResponse;
+import go.faddy.foodfornation.models.UsersProfilePostItemsModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CALL = 4;
     private TextView username, location, regionalLocation;
     private Button user_call_button;
@@ -42,58 +42,25 @@ public class UserProfileActivity extends AppCompatActivity {
     private UsersProfileItemFetchAdapter adapter;
     private List<UsersProfilePostItemsModel> usersProfilePostItemsModelList;
     private String mobileNo = null;
-    private int x;
+    private int x, add_edit, from_intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        username = findViewById(R.id.user_username);
-        location = findViewById(R.id.user_location);
-        regionalLocation = findViewById(R.id.user_regional_location);
-        user_call_button = findViewById(R.id.user_from_profile_call_btn);
-        recyclerView = findViewById(R.id.recycler_user_profile);
-        add_item_user = findViewById(R.id.add_item_user);
-        edit_user_item = findViewById(R.id.edit_user_item);
+        initializeIDs();
 
         Intent intent = getIntent();
-        x  = intent.getIntExtra("user_id", -1);
-        int from_intent = intent.getIntExtra("from_intent", -1);
-        int add_edit = intent.getIntExtra("add_edit", -1);
-        if (add_edit == -1) {
-            edit_user_item.setVisibility(View.VISIBLE);
-            add_item_user.setVisibility(View.VISIBLE);
-        } else {
-            edit_user_item.setVisibility(View.GONE);
-            add_item_user.setVisibility(View.GONE);
-        }
-        if (from_intent == -1) {
-            user_call_button.setVisibility(View.GONE);
-        } else {
-            user_call_button.setVisibility(View.VISIBLE);
-        }
+        x = intent.getIntExtra("user_id", -1);
+        from_intent = intent.getIntExtra("from_intent", -1);
+        add_edit = intent.getIntExtra("add_edit", -1);
 
-        user_call_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mobileNo != null) {
-                    makePhoneCall(mobileNo);
-                }
-            }
-        });
-        add_item_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),addNewItem.class);
-                intent.putExtra("user_id", x);
-                startActivity(intent);
-            }
-        });
-        edit_user_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        settingVisibilityOfButtons();
 
-            }
-        });
+        user_call_button.setOnClickListener(this);
+        add_item_user.setOnClickListener(this);
+        edit_user_item.setOnClickListener(this);
+
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -115,6 +82,31 @@ public class UserProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void settingVisibilityOfButtons() {
+        if (add_edit == -1) {
+            edit_user_item.setVisibility(View.VISIBLE);
+            add_item_user.setVisibility(View.VISIBLE);
+        } else {
+            edit_user_item.setVisibility(View.GONE);
+            add_item_user.setVisibility(View.GONE);
+        }
+        if (from_intent == -1) {
+            user_call_button.setVisibility(View.GONE);
+        } else {
+            user_call_button.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initializeIDs() {
+        username = findViewById(R.id.user_username);
+        location = findViewById(R.id.user_location);
+        regionalLocation = findViewById(R.id.user_regional_location);
+        user_call_button = findViewById(R.id.user_from_profile_call_btn);
+        recyclerView = findViewById(R.id.recycler_user_profile);
+        add_item_user = findViewById(R.id.add_item_user);
+        edit_user_item = findViewById(R.id.edit_user_item);
     }
 
     private void makePhoneCall(String number) {
@@ -140,6 +132,28 @@ public class UserProfileActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.edit_user_item:
+                Intent intent1 = new Intent(this, RegisterActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent1.putExtra("from_user", 1);
+                startActivity(intent1);
+                break;
+            case R.id.add_item_user:
+                Intent intent2 = new Intent(getApplicationContext(), addNewItem.class);
+                intent2.putExtra("user_id", x);
+                startActivity(intent2);
+                break;
+            case R.id.user_from_profile_call_btn:
+                if (mobileNo != null) {
+                    makePhoneCall(mobileNo);
+                }
+                break;
         }
     }
 }

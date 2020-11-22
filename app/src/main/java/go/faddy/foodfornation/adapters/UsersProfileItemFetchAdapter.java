@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +17,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import go.faddy.foodfornation.R;
-import go.faddy.foodfornation.ui.activities.ItemDetailsActivity;
 import go.faddy.foodfornation.models.UsersProfilePostItemsModel;
+import go.faddy.foodfornation.ui.activities.ItemDetailsActivity;
 
 public class UsersProfileItemFetchAdapter extends
         RecyclerView.Adapter<UsersProfileItemFetchAdapter.UsersProfileItemViewHolder> {
@@ -45,20 +46,29 @@ public class UsersProfileItemFetchAdapter extends
         holder.itemTitle.setText(usersProfilePostItemsModel.getCategory_name());
         holder.itemLocation.setText(usersProfilePostItemsModel.getUser_city() + usersProfilePostItemsModel.getUser_region());
         holder.itemPrice.setText(String.valueOf(usersProfilePostItemsModel.getItem_price()));
-        if(usersProfilePostItemsModel.getUrl_path() != null){
+        if (usersProfilePostItemsModel.getUrl_path() != null) {
             url = "https://foodfornation.gov.bd/" + usersProfilePostItemsModel.getUrl_path()
-                    + usersProfilePostItemsModel.getItem_id() +'.' +
+                    + usersProfilePostItemsModel.getItem_id() + '.' +
                     usersProfilePostItemsModel.getImage_extention();
             Picasso.get()
                     .load(url)
                     .resize(200, 200)
                     .centerCrop()
                     .into(holder.userProfileItemImage);
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(mCtx, String.valueOf(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+
         }
         String finalUrl = url;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(mCtx.getApplicationContext(), ItemDetailsActivity.class);
                 Integer temp = usersProfilePostItemsModel.getItem_id();
                 intent.putExtra("item", temp);
@@ -74,9 +84,10 @@ public class UsersProfileItemFetchAdapter extends
         return usersProfilePostItemsModelList.size();
     }
 
-    public class UsersProfileItemViewHolder extends RecyclerView.ViewHolder{
+    public class UsersProfileItemViewHolder extends RecyclerView.ViewHolder {
         TextView itemPrice, itemName, itemCategory, itemTitle, itemLocation;
         ImageView userProfileItemImage;
+
         public UsersProfileItemViewHolder(@NonNull View itemView) {
             super(itemView);
             itemPrice = itemView.findViewById(R.id.user_profile_price_item);

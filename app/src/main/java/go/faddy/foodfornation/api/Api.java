@@ -102,8 +102,8 @@ public interface Api {
             @Field("region_name") String region_name,
             @Field("city_name") String city_name,
             @Field("ip") String ip,
-            @Field("coord_lat") int coord_lat,
-            @Field("coord_long") int coord_long,
+            @Field("coord_lat") double coord_lat,
+            @Field("coord_long") double coord_long,
             @Field("user_desc") String user_desc
     );
 
@@ -137,5 +137,27 @@ public interface Api {
     Call<CheckErrorResponse> deleteComment(
             @Field("user_id") int user_id,
             @Field("comment_id") int comment_id
+    );
+
+    @FormUrlEncoded
+    @POST("updateuserprofile")
+    Call<CheckErrorResponse> updateUserProfile(
+            @Field("user_id") int user_id,
+            @Field("full_user_name") String full_user_name,
+            @Field("user_name") String user_name,
+            @Field("password") String password,
+            @Field("email") String email,
+            @Field("website") String website,
+            @Field("landline") int landline,
+            @Field("mobile_no") int mobile_no,
+            @Field("user_address") String user_address,
+            @Field("zip") String zip,
+            @Field("has_company") int has_company,
+            @Field("region_name") String region_name,
+            @Field("city_name") String city_name,
+            @Field("ip") String ip,
+            @Field("coord_lat") double coord_lat,
+            @Field("coord_long") double coord_long,
+            @Field("user_desc") String user_desc
     );
 }
