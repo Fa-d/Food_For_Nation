@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context=".ui.activities.ItemDetailsActivity">
 
     <FrameLayout
-        android:layout_width="match_parent"
         android:id="@+id/image_enlarge_container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -148,7 +148,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -244,6 +243,7 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -254,34 +254,57 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight=".9">
+                    android:layout_weight=".9"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_marginLeft="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
                         android:gravity="center_vertical"
                         android:text="Comments"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_marginLeft="6dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:boxStrokeColor="#446CCA0D"
                         android:layout_width="match_parent"
-                        app:boxStrokeWidth="2dp"
-                        app:boxCornerRadiusBottomStart="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
                         app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
                         app:boxCornerRadiusTopEnd="10dp"
                         app:boxCornerRadiusTopStart="10dp"
-                        android:layout_height="wrap_content" >
+                        app:boxStrokeColor="#446CCA0D"
+                        app:boxStrokeWidth="2dp">
+
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/item_details_comment_textfield"
+                            android:id="@+id/item_details_comment_title"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:hint="Comment Title"
+                            android:layout_height="wrap_content" />
+
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="#446CCA0D"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/item_details_comment_body"
+                            android:layout_width="match_parent"
+                            android:hint="Comment body"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -289,11 +312,11 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:layout_marginTop="25dp"
-                        android:layout_marginStart="10dp"
                         android:id="@+id/item_details_add_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="25dp"
                         android:text="Add comment" />
                 </LinearLayout>
             </LinearLayout>

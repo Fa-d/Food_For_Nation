@@ -11,49 +11,88 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/comment_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="comment title"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/commenter_name"
+                android:id="@+id/comment_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".7"
-                android:text="name"
-                android:textColor="#EB003295" />
+                android:layout_weight=".5"
+                android:paddingTop="5dp"
+                android:text="comment title"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/comment_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
+                android:layout_weight=".5"
                 android:text="date" />
+
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/comment_description"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="descrip" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/commenter_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:text="name"
+                    android:textColor="#EB003295" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/comment_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:tint="#2979FF"
+                    android:background="@null"
+                    android:src="@drawable/ic_baseline_edit" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/comment_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:tint="#CC0010"
+android:background="@null"
+                    android:src="@drawable/ic_baseline_delete" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/comment_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="descrip" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

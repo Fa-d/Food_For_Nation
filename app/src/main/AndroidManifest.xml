@@ -9,22 +9,20 @@
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+
     <permission
         android:name="PlatesContentProvider._READ_PERMISSION"
         android:protectionLevel="normal" />
     <permission
         android:name="PlatesContentProvider._WRITE_PERMISSION"
         android:protectionLevel="normal" />
-
-    <permission
-        android:name="go.faddy.foodfornation.PERMISSION"/>
+    <permission android:name="go.faddy.foodfornation.PERMISSION" />
 
     <application
         android:allowBackup="true"
@@ -34,7 +32,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodForNation"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.RegisterActivity"/>
+        <activity android:name=".ui.activities.PopUpCommentEdit"
+            android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert"
+            android:excludeFromRecents="true"
+            />
+        <activity android:name=".ui.activities.RegisterActivity" />
         <activity android:name=".ui.activities.CategoryDetailsActivity" />
         <activity android:name=".ui.activities.addNewItem" />
         <activity android:name=".ui.activities.UserProfileActivity" />

@@ -115,4 +115,27 @@ public interface Api {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
+    @POST("addcomment")
+    Call<CheckErrorResponse> addComment(
+            @Field("user_id") int user_id,
+            @Field("item_id") int item_id,
+            @Field("comment_title") String comment_title,
+            @Field("comment_body") String comment_body
+    );
+
+    @FormUrlEncoded
+    @POST("updatecomment")
+    Call<CheckErrorResponse> updateComment(
+            @Field("comment_body") String comment_body,
+            @Field("comment_title") String comment_title,
+            @Field("comment_id") int comment_id
+    );
+
+    @FormUrlEncoded
+    @POST("deletecomment")
+    Call<CheckErrorResponse> deleteComment(
+            @Field("user_id") int user_id,
+            @Field("comment_id") int comment_id
+    );
 }
