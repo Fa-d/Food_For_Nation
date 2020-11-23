@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.utils.behaviors.BottomNavigationViewBehavior;
 import go.faddy.foodfornation.adapters.ViewPagerAdapter;
+import go.faddy.foodfornation.utils.storage.SharedPrefManager;
 
 public class CategoryDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -34,6 +35,13 @@ public class CategoryDetailsActivity extends AppCompatActivity implements Bottom
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         profilebtn = findViewById(R.id.profile_button);
+
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            profilebtn.setVisibility(View.VISIBLE);
+        }else{
+            profilebtn.setVisibility(View.GONE);
+        }
+
         profilebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +86,6 @@ public class CategoryDetailsActivity extends AppCompatActivity implements Bottom
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationViewBehavior());
-    }
-
-
-    public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     @Override

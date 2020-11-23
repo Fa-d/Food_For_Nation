@@ -100,12 +100,18 @@
                 android:layout_weight=".5"
                 android:orientation="vertical">
                 <Button
-                    android:id="@+id/testing"
+                    android:id="@+id/image_button_select_for_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="Images" />
+                <Button
+                    android:id="@+id/cehcking_uri"
+                    android:layout_width="wrap_content"
+                    android:text="cehcking_uri"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"/>
                 <ImageView
                     android:id="@+id/image_show"
                     android:layout_width="200dp"

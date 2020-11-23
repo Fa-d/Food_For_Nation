@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         netOnMainThreadPermission();
         checkLocationPermission();
 
@@ -95,7 +96,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         } else {
             forUpdate();
         }
-
     }
 
     private void forUpdate() {

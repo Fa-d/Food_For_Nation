@@ -65,6 +65,7 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
         initilizeIDs();
+
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -80,6 +81,7 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
         Intent intent = getIntent();
         item_id = intent.getIntExtra("item", -1);
         image_url = intent.getStringExtra("image_url");
+
         refreshRecycler();
     }
 
@@ -167,6 +169,16 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
         recyclerView = findViewById(R.id.item_details_comment_recycler);
         item_details_comment_title = findViewById(R.id.item_details_comment_title);
         item_details_comment_body = findViewById(R.id.item_details_comment_body);
+
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            item_details_comment_title.setVisibility(View.VISIBLE);
+            item_details_comment_body.setVisibility(View.VISIBLE);
+            buttonAddComment.setVisibility(View.VISIBLE);
+        }else{
+            item_details_comment_title.setVisibility(View.GONE);
+            item_details_comment_body.setVisibility(View.GONE);
+            buttonAddComment.setVisibility(View.GONE);
+        }
         buttonAddComment.setOnClickListener(this);
     }
     private boolean hasEmptyParams() {
@@ -214,8 +226,6 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
             case R.id.item_details_add_comment:
                 addComment();
         }
-
-
     }
 
     private void addComment() {

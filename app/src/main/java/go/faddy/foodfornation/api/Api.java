@@ -11,6 +11,7 @@ import go.faddy.foodfornation.api.respones.RegionSpinnerResponse;
 import go.faddy.foodfornation.api.respones.UserIDResponse;
 import go.faddy.foodfornation.api.respones.UserProfileResponse;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -60,23 +61,22 @@ public interface Api {
             @Field("region_id") int region_id
     );
 
-    @Multipart
+    @FormUrlEncoded
     @POST("insertitem")
     Call<CheckErrorResponse> insertItem(
-            @Part("user_id") int user_id,
-            @Part("category_id") int category_id,
-            @Part("item_price") int item_price,
-            @Part("user_ip") String user_ip,
-            @Part("dt_expiration") String dt_expiration,
-            @Part("user_address") String user_address,
-            @Part("item_title") String item_title,
-            @Part("item_description") String item_description,
-            @Part("zip") int zip,
-            @Part("region_name") String region_name,
-            @Part("city_name") String city_name,
-            @Part("d_coord_lat") double d_coord_lat,
-            @Part("d_coord_long") double d_coord_long,
-            @Part MultipartBody.Part image
+            @Field("user_id") int user_id,
+            @Field("category_id") int category_id,
+            @Field("item_price") int item_price,
+            @Field("user_ip") String user_ip,
+            @Field("dt_expiration") String dt_expiration,
+            @Field("user_address") String user_address,
+            @Field("item_title") String item_title,
+            @Field("item_description") String item_description,
+            @Field("zip") int zip,
+            @Field("region_name") String region_name,
+            @Field("city_name") String city_name,
+            @Field("d_coord_lat") double d_coord_lat,
+            @Field("d_coord_long") double d_coord_long
     );
 
     @FormUrlEncoded
@@ -160,4 +160,12 @@ public interface Api {
             @Field("coord_long") double coord_long,
             @Field("user_desc") String user_desc
     );
+
+    @Multipart
+    @POST("uploadiamgetest")
+    Call<CheckErrorResponse> uploadImage(
+            @Part MultipartBody.Part image,
+            @Part("desc") RequestBody desc
+    );
+
 }
