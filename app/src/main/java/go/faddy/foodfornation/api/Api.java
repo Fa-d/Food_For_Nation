@@ -4,6 +4,7 @@ import go.faddy.foodfornation.api.respones.CategoriesResponse;
 import go.faddy.foodfornation.api.respones.CheckErrorResponse;
 import go.faddy.foodfornation.api.respones.CitySpinnerResponse;
 import go.faddy.foodfornation.api.respones.ItemDetailsResponse;
+import go.faddy.foodfornation.api.respones.ItemInsertResponse;
 import go.faddy.foodfornation.api.respones.ItemsResponse;
 import go.faddy.foodfornation.api.respones.ItemsbyLocationResponse;
 import go.faddy.foodfornation.api.respones.LoginResponse;
@@ -63,7 +64,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("insertitem")
-    Call<CheckErrorResponse> insertItem(
+    Call<ItemInsertResponse> insertItem(
             @Field("user_id") int user_id,
             @Field("category_id") int category_id,
             @Field("item_price") int item_price,

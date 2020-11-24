@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,57 +10,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#446CCA0D"
+            app:boxStrokeWidth="2dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_weight=".5"
-                android:background="#AE5599FF"
-                android:orientation="vertical">
-
-                <Spinner
-                    android:id="@+id/categories_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                 />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_weight=".5"
-                android:background="#AE5599FF"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/item_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="start"
-                    android:gravity="center_horizontal"
-                    android:hint="Price"
-                    android:textColorHint="#651FFF" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="#AE5599FF"
-            android:orientation="vertical">
-
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,16 +32,20 @@
                 android:gravity="center_horizontal"
                 android:hint="Title"
                 android:textColorHint="#651FFF" />
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="#AE5599FF"
-            android:orientation="vertical">
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#446CCA0D"
+            app:boxStrokeWidth="2dp">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/item_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,124 +53,149 @@
                 android:gravity="center_horizontal"
                 android:hint="Description"
                 android:textColorHint="#651FFF" />
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#446CCA0D"
+            app:boxStrokeWidth="2dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="start"
+                android:gravity="center_horizontal"
+                android:hint="Address"
+                android:textColorHint="#651FFF" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                android:orientation="vertical">
-                <Button
-                    android:id="@+id/image_button_select_for_upload"
-                    android:layout_width="wrap_content"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="#446CCA0D"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/item_price"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:text="Images" />
-                <Button
-                    android:id="@+id/cehcking_uri"
-                    android:layout_width="wrap_content"
-                    android:text="cehcking_uri"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@+id/image_show"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"/>
-            </LinearLayout>
-            <LinearLayout
+                    android:layout_marginRight="4dp"
+                    android:ellipsize="start"
+                    android:gravity="center_horizontal"
+                    android:hint="Price"
+                    android:inputType="phone"
+                    android:textColorHint="#651FFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:layout_weight=".5"
-                android:background="#AE5599FF"
-                android:orientation="vertical">
-                <EditText
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="#446CCA0D"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_zip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
                     android:ellipsize="start"
                     android:gravity="center_horizontal"
                     android:hint="ZIP"
+                    android:inputType="phone"
                     android:textColorHint="#651FFF" />
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:weightSum="1">
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/regions_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:layout_marginRight="3dp"
+                android:layout_weight=".33" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight=".5"
-                    android:background="#AE5599FF"
-                    android:orientation="vertical">
-
-                    <Spinner
-                        android:id="@+id/regions_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight=".5"
-                    android:background="#AE5599FF"
-                    android:orientation="vertical">
-
-                    <Spinner
-                        android:id="@+id/city_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/get_expiration_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Expiration" />
-            </LinearLayout>
-
-            <LinearLayout
+            <Spinner
+                android:id="@+id/city_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="#AE5599FF"
-                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/user_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="start"
-                    android:gravity="center_horizontal"
-                    android:hint="Address"
-                    android:textColorHint="#651FFF" />
-            </LinearLayout>
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight=".33" />
+
+            <Spinner
+                android:id="@+id/categories_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="3dp"
+                android:layout_weight=".33" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <Button
+                android:layout_weight=".5"
+                android:id="@+id/get_expiration_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="Expiration" />
+
+            <Button
+                android:layout_weight=".5"
+                android:id="@+id/image_button_select_for_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Images" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/image_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/publish_button"
             android:layout_width="wrap_content"
@@ -209,12 +203,5 @@
             android:layout_gravity="center"
             android:layout_margin="30dp"
             android:text="Publish" />
-        <Button
-            android:id="@+id/another_for_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="30dp"
-            android:text="Get Image Uri" />
     </LinearLayout>
 </ScrollView>

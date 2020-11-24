@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,6 +55,7 @@ import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.api.respones.CategoriesResponse;
 import go.faddy.foodfornation.api.respones.CheckErrorResponse;
 import go.faddy.foodfornation.api.respones.CitySpinnerResponse;
+import go.faddy.foodfornation.api.respones.ItemInsertResponse;
 import go.faddy.foodfornation.api.respones.RegionSpinnerResponse;
 import go.faddy.foodfornation.models.CategoriesModel;
 import go.faddy.foodfornation.models.CitiesNameSpinnerModel;
@@ -73,14 +74,15 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
     private List<CategoriesModel> categoriesModelList;
     private List<RegionsNameSpinnerModel> regionsNameSpinnerModelList;
     private List<CitiesNameSpinnerModel> citySpinnerResponseList;
-    private Button getImage, get_expiration_date, publish_button, another_for_test, cehcking_uri;
+    private Button getImage, get_expiration_date, publish_button;
     private double latitude, longitude;
     private LocationManager locationManager;
     private Criteria criteria;
     private int mYear, mMonth, mDay, user_id, GALLERY_REQUEST = 1;
     private EditText item_price, item_title, item_description, user_zip, user_address;
     private String categoryName, regionName, cityName, price, itemTitle, itemDescription,
-            userZip, experationDate, userAddress, ip,  bestProvider;;
+            userZip, experationDate, userAddress, ip, bestProvider;
+
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -101,7 +103,6 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         publish_button.setOnClickListener(this);
         spinnerCategories.setOnItemSelectedListener(this);
         spinnerRegions.setOnItemSelectedListener(this);
-        cehcking_uri.setOnClickListener(this);
         user_id = SharedPrefManager.getInstance(this).getUser().getUser_id();
     }
 
@@ -148,6 +149,39 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         }
     }
 
+    private boolean checkEmptyParams() {
+        boolean return_val; experationDate = get_expiration_date.getText().toString().trim();
+        if (TextUtils.isEmpty(item_price.getText())) {
+            return_val = false;
+            item_price.setError("Enter Price");
+        } else if (TextUtils.isEmpty(item_title.getText())) {
+            return_val = false;
+            item_title.setError("Enter Title");
+        } else if (TextUtils.isEmpty(item_description.getText())) {
+            return_val = false;
+            item_description.setError("Enter Description");
+        } else if (TextUtils.isEmpty(user_zip.getText())) {
+            return_val = false;
+            user_zip.setError("Enter ZIP");
+        } else if (TextUtils.isEmpty(user_address.getText())) {
+            return_val = false;
+            user_address.setError("Enter Address");
+        } else if (spinnerCities.getSelectedItemPosition() < 1 || spinnerRegions.getSelectedItemPosition() < 1 ||
+                spinnerCategories.getSelectedItemPosition() < 1) {
+            return_val = false;
+            Toast.makeText(this, "Select All required Params", Toast.LENGTH_SHORT).show();
+        } else if (experationDate == null) {
+            return_val = false;
+            Toast.makeText(this, "Select expiration date", Toast.LENGTH_SHORT).show();
+        } else if (selectedImage == null) {
+            return_val = false;
+            Toast.makeText(this, "Select image", Toast.LENGTH_SHORT).show();
+        } else {
+            return_val = true;
+        }
+        return return_val;
+    }
+
     private void fetchTexts() {
         categoryName = spinnerCategories.getSelectedItem().toString();
         regionName = spinnerRegions.getSelectedItem().toString();
@@ -158,6 +192,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         itemDescription = item_description.getText().toString().trim();
         userZip = user_zip.getText().toString().trim();
         userAddress = user_address.getText().toString().trim();
+        experationDate = get_expiration_date.getText().toString().trim();
 
         try {
             experationDate = stringDateToMySqlDate();
@@ -173,30 +208,29 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         int category_id = categoriesModelList.get(spinnerCategories.getSelectedItemPosition()).getCategory_id();
 
         if ((category_id != 0) && (Integer.parseInt(price) != 0) && (ip != null) && (experationDate != null) &&
-            (userAddress != null) && (itemTitle != null) && (itemDescription != null) && (Integer.parseInt(userZip)
-            != 0) && (regionName != null) && (cityName != null) && (latitude != 0.0) && (longitude != 0.0)) {
+                (userAddress != null) && (itemTitle != null) && (itemDescription != null) && (Integer.parseInt(userZip)
+                != 0) && (regionName != null) && (cityName != null) && (latitude != 0.0) && (longitude != 0.0)) {
 
             RetrofitClient.getInstance().getApi().insertItem(user_id, category_id, Integer.parseInt(price),
                     ip, experationDate, userAddress, itemTitle, itemDescription, Integer.parseInt(userZip),
                     regionName, cityName, latitude, longitude)
-                .enqueue(new Callback<CheckErrorResponse>() {
-                    @Override
-                    public void onResponse(Call<CheckErrorResponse> call, Response<CheckErrorResponse> response) {
-                        if (response.body() != null) {
-                            if (!response.body().isError()) {
-                                Toast.makeText(addNewItem.this, "Sucessfully inseted", Toast.LENGTH_SHORT).show();
-                                uploadFile(selectedImage, String.valueOf(category_id));
+                    .enqueue(new Callback<ItemInsertResponse>() {
+                        @Override
+                        public void onResponse(Call<ItemInsertResponse> call, Response<ItemInsertResponse> response) {
+                            if (response.body() != null) {
+                                if (response.body().isSuccess()) {
+                                    uploadFile(selectedImage, String.valueOf(response.body().getItem_id()));
+                                }
+                            } else {
+                                Toast.makeText(addNewItem.this, "null Response", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(addNewItem.this, "null Response", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<CheckErrorResponse> call, Throwable t) {
-                        Toast.makeText(addNewItem.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-            });
+                        @Override
+                        public void onFailure(Call<ItemInsertResponse> call, Throwable t) {
+                            Toast.makeText(addNewItem.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         } else {
             Toast.makeText(this, "Something seems null", Toast.LENGTH_SHORT).show();
         }
@@ -215,9 +249,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         item_description = findViewById(R.id.item_description);
         user_zip = findViewById(R.id.user_zip);
         user_address = findViewById(R.id.user_address);
-        another_for_test = findViewById(R.id.another_for_test);
         imageView = findViewById(R.id.image_show);
-        cehcking_uri = findViewById(R.id.cehcking_uri);
     }
 
     protected void getLocation() {
@@ -299,22 +331,21 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
     }
 
     private void spinnerApiFetch() {
-        Call<CitySpinnerResponse> callCity =
-                RetrofitClient.getInstance().getApi().getCitiesNameSpinner(
-                        regionsNameSpinnerModelList.get(
-                                spinnerRegions.getSelectedItemPosition() - 1).getRegion_id());
-        callCity.enqueue(new Callback<CitySpinnerResponse>() {
-            @Override
-            public void onResponse(Call<CitySpinnerResponse> call, Response<CitySpinnerResponse> response) {
-                citySpinnerResponseList = response.body().getCities();
-                populateSpinner(3);
-            }
 
-            @Override
-            public void onFailure(Call<CitySpinnerResponse> call, Throwable t) {
+        RetrofitClient.getInstance().getApi().getCitiesNameSpinner(regionsNameSpinnerModelList
+                .get(spinnerRegions.getSelectedItemPosition() - 1).getRegion_id())
+                .enqueue(new Callback<CitySpinnerResponse>() {
 
-            }
-        });
+                    @Override
+                    public void onResponse(Call<CitySpinnerResponse> call, Response<CitySpinnerResponse> response) {
+                        citySpinnerResponseList = response.body().getCities();
+                        populateSpinner(3);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CitySpinnerResponse> call, Throwable t) {
+                    }
+                });
     }
 
     @Override
@@ -375,45 +406,40 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         int id = v.getId();
         if (id == R.id.publish_button) {
             verifyStoragePermissions(addNewItem.this);
-//            uploadFile(selectedImage, "A file");
             if (spinnerCities.getSelectedItemPosition() >= 1
                     && spinnerRegions.getSelectedItemPosition() >= 1
-                    && spinnerCategories.getSelectedItemPosition() >= 1) {
+                    && spinnerCategories.getSelectedItemPosition() >= 1 && checkEmptyParams()) {
                 fetchTexts();
-
             } else {
                 Toast.makeText(addNewItem.this, "Select all required params", Toast.LENGTH_SHORT).show();
             }
-
         } else if (id == R.id.image_button_select_for_upload) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-            }else{
                 verifyStoragePermissions(this);
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+            } else {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
             }
         } else if (id == R.id.get_expiration_date) {
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(addNewItem.this,
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            mYear = year;
-                            mMonth = monthOfYear;
-                            mDay = dayOfMonth;
-                            get_expiration_date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                        }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        } else if (id == R.id.cehcking_uri) {
-
-
+            new DatePickerDialog(addNewItem.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                    get_expiration_date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                }
+            }, mYear, mMonth, mDay).show();
         }
     }
 
@@ -458,6 +484,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
                 if (response.body() != null) {
                     if (!response.body().isError()) {
                         Toast.makeText(addNewItem.this, "Says Image upload Successful", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }
             }

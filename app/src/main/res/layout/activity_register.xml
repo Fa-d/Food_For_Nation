@@ -82,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Password"
+                android:inputType="textPassword"
                 android:paddingTop="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,6 +143,7 @@
                 android:id="@+id/user_landline_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 android:hint="Landline no"
                 android:paddingTop="20dp" />
 
@@ -164,6 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mobile No"
+                android:inputType="phone"
                 android:paddingTop="20dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
