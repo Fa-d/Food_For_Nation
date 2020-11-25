@@ -150,7 +150,8 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
     }
 
     private boolean checkEmptyParams() {
-        boolean return_val; experationDate = get_expiration_date.getText().toString().trim();
+        boolean return_val;
+        experationDate = get_expiration_date.getText().toString().trim();
         if (TextUtils.isEmpty(item_price.getText())) {
             return_val = false;
             item_price.setError("Enter Price");
@@ -219,7 +220,8 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
                         public void onResponse(Call<ItemInsertResponse> call, Response<ItemInsertResponse> response) {
                             if (response.body() != null) {
                                 if (response.body().isSuccess()) {
-                                    uploadFile(selectedImage, String.valueOf(response.body().getItem_id()));
+                                    uploadFile(selectedImage, String.valueOf(response.body().getItem_id()),
+                                            String.valueOf(response.body().getCategory_id()));
                                 }
                             } else {
                                 Toast.makeText(addNewItem.this, "null Response", Toast.LENGTH_SHORT).show();
@@ -466,19 +468,17 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         }
     }
 
-    private void uploadFile(Uri fileUri, String desc) {
+    private void uploadFile(Uri fileUri, String item_id, String category_id) {
 
         File file = new File(getRealPathFromURI(fileUri));
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-        RequestBody descBody = RequestBody.create(MediaType.parse("text/plain"), desc);
+        RequestBody item_id_req = RequestBody.create(MediaType.parse("text/plain"), item_id);
+        RequestBody category_id_req = RequestBody.create(MediaType.parse("text/plain"), category_id);
 
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
-        RequestBody fullName =
-                RequestBody.create(MediaType.parse("multipart/form-data"), "Your Name");
-
-        RetrofitClient.getInstance().getApi().uploadImage(body, descBody).enqueue(new Callback<CheckErrorResponse>() {
+        RetrofitClient.getInstance().getApi().uploadImage(body, item_id_req, category_id_req).enqueue(new Callback<CheckErrorResponse>() {
             @Override
             public void onResponse(Call<CheckErrorResponse> call, Response<CheckErrorResponse> response) {
                 if (response.body() != null) {

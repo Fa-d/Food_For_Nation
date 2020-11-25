@@ -1,86 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/user_username"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/header1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="username"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <TextView
-            android:id="@+id/user_location"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Your Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/add_item_user"
+                    android:layout_width="50dp"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_baseline_add" />
+
+                <ImageButton
+                    android:id="@+id/edit_user_item"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:background="@null"
+                    android:src="@drawable/ic_baseline_edit" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="location" />
+            android:layout_below="@id/header1">
 
-        <TextView
-            android:id="@+id/user_regional_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Regional location" />
-        <Button
-            android:id="@+id/user_from_profile_call_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:gravity="center"
+            <include layout="@layout/layout_user_profile" />
+        </androidx.core.widget.NestedScrollView>
 
-            android:text="contract" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="1">
-
-
-
-            <ImageButton
-                android:id="@+id/add_item_user"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_weight=".5"
-                android:background="@null"
-                android:src="@drawable/ic_baseline_add" />
-
-            <ImageButton
-                android:id="@+id/edit_user_item"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight=".5"
-                android:background="@null"
-                android:src="@drawable/ic_baseline_edit" />
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:text="Description\n Has no Description yet" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_user_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-</androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -166,7 +166,8 @@ public interface Api {
     @POST("uploadiamgetest")
     Call<CheckErrorResponse> uploadImage(
             @Part MultipartBody.Part image,
-            @Part("desc") RequestBody desc
+            @Part("item_id") RequestBody item_id,
+            @Part("category_id") RequestBody category_id
     );
 
 }

@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -49,7 +47,7 @@ public class CategoryDetailsActivity extends AppCompatActivity implements Bottom
 
             }
         });
-        bottomNavigation = findViewById(R.id.bottomMenu);
+        bottomNavigation = findViewById(R.id.footer);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
         viewPager = findViewById(R.id.view_pager);
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
