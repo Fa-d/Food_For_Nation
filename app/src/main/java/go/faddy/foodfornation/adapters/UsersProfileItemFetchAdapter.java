@@ -17,16 +17,18 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import go.faddy.foodfornation.R;
-import go.faddy.foodfornation.models.UsersProfilePostItemsModel;
+import go.faddy.foodfornation.api.respones.UserProfileResponse;
 import go.faddy.foodfornation.ui.activities.ItemDetailsActivity;
+import go.faddy.foodfornation.ui.activities.ItemUpdateOrDeletePopUp;
 
 public class UsersProfileItemFetchAdapter extends
         RecyclerView.Adapter<UsersProfileItemFetchAdapter.UsersProfileItemViewHolder> {
     private Context mCtx;
-    private List<UsersProfilePostItemsModel> usersProfilePostItemsModelList;
+    private List<UserProfileResponse.UsersProfilePostItemsModel> usersProfilePostItemsModelList;
 
-    public UsersProfileItemFetchAdapter(Context mCtx, List<UsersProfilePostItemsModel> usersProfilePostItemsModelList) {
+    public UsersProfileItemFetchAdapter(Context mCtx, List<UserProfileResponse.UsersProfilePostItemsModel> usersProfilePostItemsModelList) {
         this.mCtx = mCtx;
+//        this.mCtx = new ContextThemeWrapper(mCtx, R.style.AppTheme);
         this.usersProfilePostItemsModelList = usersProfilePostItemsModelList;
     }
 
@@ -41,7 +43,7 @@ public class UsersProfileItemFetchAdapter extends
     @Override
     public void onBindViewHolder(@NonNull UsersProfileItemViewHolder holder, int position) {
         String url = null;
-        UsersProfilePostItemsModel usersProfilePostItemsModel = usersProfilePostItemsModelList.get(position);
+        UserProfileResponse.UsersProfilePostItemsModel usersProfilePostItemsModel = usersProfilePostItemsModelList.get(position);
         holder.itemName.setText(usersProfilePostItemsModel.getItem_name());
         holder.itemTitle.setText(usersProfilePostItemsModel.getCategory_name());
         holder.itemLocation.setText(usersProfilePostItemsModel.getUser_city() + usersProfilePostItemsModel.getUser_region());
@@ -59,11 +61,16 @@ public class UsersProfileItemFetchAdapter extends
                 @Override
                 public boolean onLongClick(View v) {
                     Toast.makeText(mCtx, String.valueOf(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mCtx.getApplicationContext(), ItemUpdateOrDeletePopUp.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    int item_id = usersProfilePostItemsModel.getItem_id();
+                    intent.putExtra("item_id", item_id);
+                    mCtx.startActivity(intent);
                     return true;
                 }
             });
-
         }
+
         String finalUrl = url;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +80,7 @@ public class UsersProfileItemFetchAdapter extends
                 Integer temp = usersProfilePostItemsModel.getItem_id();
                 intent.putExtra("item", temp);
                 intent.putExtra("image_url", finalUrl);
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mCtx.startActivity(intent);
             }

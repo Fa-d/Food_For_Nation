@@ -90,6 +90,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
     };
     private Uri selectedImage;
     private ImageView imageView;
+    private int x, update_value, from_intent, category_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,12 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         spinnerCategories.setOnItemSelectedListener(this);
         spinnerRegions.setOnItemSelectedListener(this);
         user_id = SharedPrefManager.getInstance(this).getUser().getUser_id();
+
+        Intent intent = getIntent();
+        x = intent.getIntExtra("user_id", -1);
+        from_intent = intent.getIntExtra("from_intent", -1);
+        update_value = intent.getIntExtra("update_item", -1);
+
     }
 
     private void apiCalls() {
@@ -206,36 +213,48 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
             getLocation();
         }
 
-        int category_id = categoriesModelList.get(spinnerCategories.getSelectedItemPosition()).getCategory_id();
+        if ((category_id != 0) && (Integer.parseInt(price) != 0) && (ip != null) &&
+                (experationDate != null) && (userAddress != null) && (itemTitle != null) &&
+                (itemDescription != null) && (Integer.parseInt(userZip) != 0) &&
+                (regionName != null) && (cityName != null) && (latitude != 0.0) && (longitude != 0.0)) {
+            if (x == -1) {
+                forInsert();
+            } else {
+                forUpdate();
+            }
 
-        if ((category_id != 0) && (Integer.parseInt(price) != 0) && (ip != null) && (experationDate != null) &&
-                (userAddress != null) && (itemTitle != null) && (itemDescription != null) && (Integer.parseInt(userZip)
-                != 0) && (regionName != null) && (cityName != null) && (latitude != 0.0) && (longitude != 0.0)) {
-
-            RetrofitClient.getInstance().getApi().insertItem(user_id, category_id, Integer.parseInt(price),
-                    ip, experationDate, userAddress, itemTitle, itemDescription, Integer.parseInt(userZip),
-                    regionName, cityName, latitude, longitude)
-                    .enqueue(new Callback<ItemInsertResponse>() {
-                        @Override
-                        public void onResponse(Call<ItemInsertResponse> call, Response<ItemInsertResponse> response) {
-                            if (response.body() != null) {
-                                if (response.body().isSuccess()) {
-                                    uploadFile(selectedImage, String.valueOf(response.body().getItem_id()),
-                                            String.valueOf(response.body().getCategory_id()));
-                                }
-                            } else {
-                                Toast.makeText(addNewItem.this, "null Response", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ItemInsertResponse> call, Throwable t) {
-                            Toast.makeText(addNewItem.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
         } else {
             Toast.makeText(this, "Something seems null", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void forUpdate() {
+
+    }
+
+    private void forInsert() {
+        category_id = categoriesModelList.get(spinnerCategories.getSelectedItemPosition()).getCategory_id();
+        RetrofitClient.getInstance().getApi().insertItem(user_id, category_id, Integer.parseInt(price),
+                ip, experationDate, userAddress, itemTitle, itemDescription, Integer.parseInt(userZip),
+                regionName, cityName, latitude, longitude)
+                .enqueue(new Callback<ItemInsertResponse>() {
+                    @Override
+                    public void onResponse(Call<ItemInsertResponse> call, Response<ItemInsertResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().isSuccess()) {
+                                uploadFile(selectedImage, String.valueOf(response.body().getItem_id()),
+                                        String.valueOf(response.body().getCategory_id()));
+                            }
+                        } else {
+                            Toast.makeText(addNewItem.this, "null Response", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ItemInsertResponse> call, Throwable t) {
+                        Toast.makeText(addNewItem.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void initilizeIDs() {
@@ -348,51 +367,6 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
                     public void onFailure(Call<CitySpinnerResponse> call, Throwable t) {
                     }
                 });
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
-
-    private String getIP() {
-        String ip = null;
-        String sURL = "http://www.ip-api.com/json"; //just a string
-        URL url = null;
-        try {
-            url = new URL(sURL);
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
-            JsonObject rootobj = root.getAsJsonObject();
-            ip = rootobj.get("query").getAsString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (ip != null) {
-            return ip;
-        } else {
-            return "";
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        locationManager.removeUpdates(this);
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
     }
 
     private String stringDateToMySqlDate() throws ParseException {
@@ -513,6 +487,51 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    private String getIP() {
+        String ip = null;
+        String sURL = "http://www.ip-api.com/json"; //just a string
+        URL url = null;
+        try {
+            url = new URL(sURL);
+            URLConnection request = url.openConnection();
+            request.connect();
+            JsonParser jp = new JsonParser();
+            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+            JsonObject rootobj = root.getAsJsonObject();
+            ip = rootobj.get("query").getAsString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (ip != null) {
+            return ip;
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        locationManager.removeUpdates(this);
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
     }
 }
 

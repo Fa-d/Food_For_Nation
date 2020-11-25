@@ -228,12 +228,12 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                 @Override
                                 public void onResponse(Call<UserIDResponse> call, Response<UserIDResponse> response2) {
                                     if (response2.body() != null) {
-                                        Toast.makeText(RegisterActivity.this, "came", Toast.LENGTH_SHORT).show();
                                         LoginResponse temp = new LoginResponse(response2.body().getUser_id(), response.body().isError());
                                         SharedPrefManager.getInstance(RegisterActivity.this).saveUser(temp);
                                         Intent intent = new Intent(RegisterActivity.this, CategoryDetailsActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 }
 

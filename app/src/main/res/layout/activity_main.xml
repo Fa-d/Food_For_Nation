@@ -46,8 +46,8 @@
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/botton_nav_and_screen" />
 
+        <include layout="@layout/botton_nav_and_screen" />
 
     </RelativeLayout>
 

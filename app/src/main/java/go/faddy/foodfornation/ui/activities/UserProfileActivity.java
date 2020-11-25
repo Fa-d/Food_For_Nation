@@ -26,8 +26,7 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.adapters.UsersProfileItemFetchAdapter;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.api.respones.UserProfileResponse;
-import go.faddy.foodfornation.api.respones.UsersProfileMiddleResponse;
-import go.faddy.foodfornation.models.UsersProfilePostItemsModel;
+import go.faddy.foodfornation.utils.storage.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,9 +37,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     private Button user_call_button;
     private RecyclerView recyclerView;
     private ImageButton add_item_user, edit_user_item;
-    private UsersProfileMiddleResponse usersposts;
+    private UserProfileResponse.UsersProfileMiddleResponse usersposts;
     private UsersProfileItemFetchAdapter adapter;
-    private List<UsersProfilePostItemsModel> usersProfilePostItemsModelList;
+    private List<UserProfileResponse.UsersProfilePostItemsModel> usersProfilePostItemsModelList;
     private String mobileNo = null;
     private int x, add_edit, from_intent;
 
@@ -53,6 +52,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         x = intent.getIntExtra("user_id", -1);
         from_intent = intent.getIntExtra("from_intent", -1);
+
         add_edit = intent.getIntExtra("add_edit", -1);
 
         settingVisibilityOfButtons();
@@ -63,25 +63,35 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        hitApi();
+    }
 
-        Call<UserProfileResponse> call = RetrofitClient.getInstance().getApi().profileDetails(x == -1 ? 18 : x);
-        call.enqueue(new Callback<UserProfileResponse>() {
-            @Override
-            public void onResponse(Call<UserProfileResponse> call, Response<UserProfileResponse> response) {
-                usersposts = response.body().getItems();
-                mobileNo = usersposts.getUser_mobile_no();
-                username.setText(usersposts.getUser_name());
-                location.setText(usersposts.getUser_city() + " , " + usersposts.getUser_region());
-                usersProfilePostItemsModelList = usersposts.getUsers_post_items();
-                adapter = new UsersProfileItemFetchAdapter(getApplicationContext(), usersProfilePostItemsModelList);
-                recyclerView.setAdapter(adapter);
-            }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hitApi();
+    }
 
-            @Override
-            public void onFailure(Call<UserProfileResponse> call, Throwable t) {
+    private void hitApi() {
+        int user_id = SharedPrefManager.getInstance(this).getUser().getUser_id();
+        RetrofitClient.getInstance().getApi().profileDetails(x == -1 ? user_id : x)
+                .enqueue(new Callback<UserProfileResponse>() {
+                    @Override
+                    public void onResponse(Call<UserProfileResponse> call, Response<UserProfileResponse> response) {
+                        usersposts = response.body().getItems();
+                        mobileNo = usersposts.getUser_mobile_no();
+                        username.setText(usersposts.getUser_name());
+                        location.setText(usersposts.getUser_city() + " , " + usersposts.getUser_region());
+                        usersProfilePostItemsModelList = usersposts.getUsers_post_items();
+                        adapter = new UsersProfileItemFetchAdapter(getApplicationContext(), usersProfilePostItemsModelList);
+                        recyclerView.setAdapter(adapter);
+                    }
 
-            }
-        });
+                    @Override
+                    public void onFailure(Call<UserProfileResponse> call, Throwable t) {
+                        Toast.makeText(UserProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void settingVisibilityOfButtons() {
@@ -157,3 +167,4 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 }
+

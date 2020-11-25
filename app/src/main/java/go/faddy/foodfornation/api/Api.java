@@ -108,7 +108,6 @@ public interface Api {
             @Field("user_desc") String user_desc
     );
 
-
     @FormUrlEncoded
     @POST("useridatregistration")
     Call<UserIDResponse> checkId(

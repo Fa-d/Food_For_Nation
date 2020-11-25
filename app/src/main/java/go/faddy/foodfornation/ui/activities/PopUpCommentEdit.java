@@ -27,6 +27,7 @@ public class PopUpCommentEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.popup_comment_edit);
         WindowManager.LayoutParams params = getWindow().getAttributes();

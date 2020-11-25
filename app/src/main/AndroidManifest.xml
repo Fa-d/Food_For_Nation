@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="go.faddy.foodfornation">
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,29 +16,23 @@
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
-
-
-<!--    <permission-->
-<!--        android:name="PlatesContentProvider._READ_PERMISSION"-->
-<!--        android:protectionLevel="normal" />-->
-<!--    <permission-->
-<!--        android:name="PlatesContentProvider._WRITE_PERMISSION"-->
-<!--        android:protectionLevel="normal" />-->
-<!--    <permission android:name="go.faddy.foodfornation.PERMISSION" />-->
-
     <application
         android:allowBackup="true"
-        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodForNation"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.PopUpCommentEdit"
-            android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert"
+        <activity
+            android:name=".ui.activities.ItemUpdateOrDeletePopUp"
             android:excludeFromRecents="true"
-            />
+            android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
+        <activity
+            android:name=".ui.activities.PopUpCommentEdit"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
         <activity android:name=".ui.activities.RegisterActivity" />
         <activity android:name=".ui.activities.CategoryDetailsActivity" />
         <activity android:name=".ui.activities.addNewItem" />

@@ -56,6 +56,7 @@ public class ItemFetchAdapter extends RecyclerView.Adapter<ItemFetchAdapter.Item
 
         String finalUrl = url;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mCtx.getApplicationContext(), ItemDetailsActivity.class);
