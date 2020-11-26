@@ -169,4 +169,28 @@ public interface Api {
             @Part("category_id") RequestBody category_id
     );
 
+    @FormUrlEncoded
+    @POST("updateitem")
+    Call<CheckErrorResponse> updateItem(
+            @Field("item_p_key") int item_id,
+            @Field("category_id") int category_id,
+            @Field("item_price") int item_price,
+            @Field("ip") String user_ip,
+            @Field("user_address") String user_address,
+            @Field("item_title") String item_title,
+            @Field("item_description") String item_description,
+            @Field("zip") int zip,
+            @Field("region_name") String region_name,
+            @Field("city_name") String city_name,
+            @Field("d_coord_lat") double d_coord_lat,
+            @Field("d_coord_long") double d_coord_long
+    );
+    @FormUrlEncoded
+    @POST("deleteitem")
+    Call<CheckErrorResponse> deleteItem(
+            @Field("item_p_key") int item_p_key,
+            @Field("region_name") String region_name,
+            @Field("city_name") String city_name
+    );
+
 }

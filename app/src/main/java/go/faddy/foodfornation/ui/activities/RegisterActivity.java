@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private Criteria criteria;
     private RadioGroup radioGroup;
     private RadioButton radioButton, yes, no;
-    private int isOwner = -1 , x;
+    private int isOwner = -1, x;
     private Button the_register;
 
     @Override
@@ -121,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         if (user_full_name_register_string != null && user_name_register_string != null && enter_password_register_string != null &&
                 mail_register_string != null && user_website_register_string != null && Integer.parseInt(user_landline_register_string) != 0 &&
                 Integer.parseInt(user_mobile_register_string) != 0 && user_address_inputed_register_string != null &&
-                user_zip_register_string != null && isOwner != -1 && regionName != null && cityName != null && ip != null &&  latitude != 0 &&
+                user_zip_register_string != null && isOwner != -1 && regionName != null && cityName != null && ip != null && latitude != 0 &&
                 longitude != 0 && user_self_description_string != null) {
 
             int user_id = SharedPrefManager.getInstance(RegisterActivity.this).getUser().getUser_id();
@@ -228,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                 @Override
                                 public void onResponse(Call<UserIDResponse> call, Response<UserIDResponse> response2) {
                                     if (response2.body() != null) {
-                                        LoginResponse temp = new LoginResponse(response2.body().getUser_id(), response.body().isError());
+                                        LoginResponse temp = new LoginResponse(response.body().isError(), response2.body().getUser_id(), regionName, cityName);
                                         SharedPrefManager.getInstance(RegisterActivity.this).saveUser(temp);
                                         Intent intent = new Intent(RegisterActivity.this, CategoryDetailsActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

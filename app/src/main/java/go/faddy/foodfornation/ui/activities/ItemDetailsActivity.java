@@ -241,7 +241,6 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
                         item_details_comment_body.setText("");
                         item_details_comment_title.setText("");
                         refreshRecycler();
-                        Toast.makeText(ItemDetailsActivity.this, "Successfully commented", Toast.LENGTH_SHORT).show();
                     }
                 }
 

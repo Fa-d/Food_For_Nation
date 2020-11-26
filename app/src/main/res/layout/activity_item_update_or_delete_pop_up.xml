@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:padding="10dp"
     android:weightSum="1"
-    tools:context=".ui.activities.ItemUpdateOrDeletePopUp">
+    tools:context=".ui.popup.ItemUpdateOrDeletePopUp">
 
     <LinearLayout
         android:id="@+id/edit_item_from_user_list"

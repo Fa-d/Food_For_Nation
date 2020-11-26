@@ -90,7 +90,7 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
     };
     private Uri selectedImage;
     private ImageView imageView;
-    private int x, update_value, from_intent, category_id;
+    private int user_id_intent, update_value, from_intent, category_id, item_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,8 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         user_id = SharedPrefManager.getInstance(this).getUser().getUser_id();
 
         Intent intent = getIntent();
-        x = intent.getIntExtra("user_id", -1);
+        user_id_intent = intent.getIntExtra("user_id", -1);
+        item_id = intent.getIntExtra("item_id", -1);
         from_intent = intent.getIntExtra("from_intent", -1);
         update_value = intent.getIntExtra("update_item", -1);
 
@@ -212,12 +213,13 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
         while (latitude == 0) {
             getLocation();
         }
-
+        category_id = categoriesModelList.get(spinnerCategories.getSelectedItemPosition()).getCategory_id();
         if ((category_id != 0) && (Integer.parseInt(price) != 0) && (ip != null) &&
                 (experationDate != null) && (userAddress != null) && (itemTitle != null) &&
                 (itemDescription != null) && (Integer.parseInt(userZip) != 0) &&
                 (regionName != null) && (cityName != null) && (latitude != 0.0) && (longitude != 0.0)) {
-            if (x == -1) {
+
+            if (item_id == -1) {
                 forInsert();
             } else {
                 forUpdate();
@@ -229,12 +231,30 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
     }
 
     private void forUpdate() {
+        Intent intent = getIntent();
 
+        RetrofitClient.getInstance().getApi().updateItem(item_id, category_id, Integer.parseInt(price),
+                ip, userAddress, itemTitle, itemDescription, Integer.parseInt(userZip),
+                regionName, cityName, latitude, longitude)
+                .enqueue(new Callback<CheckErrorResponse>() {
+                    @Override
+                    public void onResponse(Call<CheckErrorResponse> call, Response<CheckErrorResponse> response) {
+                        if (response.body() != null) {
+                            if (!response.body().isError()) {
+                                uploadFile(selectedImage, String.valueOf(item_id), String.valueOf(category_id));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CheckErrorResponse> call, Throwable t) {
+                        Toast.makeText(addNewItem.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void forInsert() {
-        category_id = categoriesModelList.get(spinnerCategories.getSelectedItemPosition()).getCategory_id();
-        RetrofitClient.getInstance().getApi().insertItem(user_id, category_id, Integer.parseInt(price),
+        RetrofitClient.getInstance().getApi().insertItem(user_id_intent, category_id, Integer.parseInt(price),
                 ip, experationDate, userAddress, itemTitle, itemDescription, Integer.parseInt(userZip),
                 regionName, cityName, latitude, longitude)
                 .enqueue(new Callback<ItemInsertResponse>() {
@@ -245,8 +265,6 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
                                 uploadFile(selectedImage, String.valueOf(response.body().getItem_id()),
                                         String.valueOf(response.body().getCategory_id()));
                             }
-                        } else {
-                            Toast.makeText(addNewItem.this, "null Response", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -435,7 +453,6 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
 
     private void parsingImage() {
         if (selectedImage == null) {
-            Toast.makeText(this, "Please select the image again", Toast.LENGTH_SHORT).show();
 
         } else {
             imageView.setImageURI(selectedImage);
@@ -457,7 +474,6 @@ public class addNewItem extends Activity implements OnItemSelectedListener, Loca
             public void onResponse(Call<CheckErrorResponse> call, Response<CheckErrorResponse> response) {
                 if (response.body() != null) {
                     if (!response.body().isError()) {
-                        Toast.makeText(addNewItem.this, "Says Image upload Successful", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

@@ -26,11 +26,11 @@
         android:theme="@style/Theme.FoodForNation"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.activities.ItemUpdateOrDeletePopUp"
+            android:name=".ui.popup.ItemUpdateOrDeletePopUp"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
         <activity
-            android:name=".ui.activities.PopUpCommentEdit"
+            android:name=".ui.popup.PopUpCommentEdit"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
         <activity android:name=".ui.activities.RegisterActivity" />

@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,8 +17,7 @@ import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.api.RetrofitClient;
 import go.faddy.foodfornation.api.respones.CheckErrorResponse;
 import go.faddy.foodfornation.models.CommentModel;
-import go.faddy.foodfornation.ui.activities.ItemDetailsActivity;
-import go.faddy.foodfornation.ui.activities.PopUpCommentEdit;
+import go.faddy.foodfornation.ui.popup.PopUpCommentEdit;
 import go.faddy.foodfornation.utils.storage.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;

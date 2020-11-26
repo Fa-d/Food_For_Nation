@@ -19,7 +19,7 @@ import java.util.List;
 import go.faddy.foodfornation.R;
 import go.faddy.foodfornation.api.respones.UserProfileResponse;
 import go.faddy.foodfornation.ui.activities.ItemDetailsActivity;
-import go.faddy.foodfornation.ui.activities.ItemUpdateOrDeletePopUp;
+import go.faddy.foodfornation.ui.popup.ItemUpdateOrDeletePopUp;
 
 public class UsersProfileItemFetchAdapter extends
         RecyclerView.Adapter<UsersProfileItemFetchAdapter.UsersProfileItemViewHolder> {

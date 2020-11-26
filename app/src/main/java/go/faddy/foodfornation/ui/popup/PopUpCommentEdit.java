@@ -1,4 +1,4 @@
-package go.faddy.foodfornation.ui.activities;
+package go.faddy.foodfornation.ui.popup;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -26,7 +26,8 @@ public class SharedPrefManager {
     public void saveUser(LoginResponse user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
+        editor.putString("city", user.getCity());
+        editor.putString("region", user.getRegion());
         editor.putInt("uid", user.getUser_id());
         editor.apply();
     }
@@ -39,8 +40,10 @@ public class SharedPrefManager {
     public LoginResponse getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new LoginResponse(
+                sharedPreferences.getBoolean("error", true),
                 sharedPreferences.getInt("uid", -1),
-                sharedPreferences.getBoolean("error", true)
+                sharedPreferences.getString("city", null),
+                sharedPreferences.getString("region", null)
         );
     }
 
